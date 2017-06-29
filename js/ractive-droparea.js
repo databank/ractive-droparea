@@ -1,6 +1,6 @@
 Ractive.components.droparea = Ractive.extend({
 	isolated: true,
-	template: "<div class='{{class}} {{#if dropping}}dropping{{/if}}' style='{{style}}'\
+	template: "<div class='droparea {{#if dropping}}dropping{{/if}} {{class}} ' style='{{style}}'\
 		on-dragenter='dragenter'\
 		on-dragover='dragover'\
 		on-drop='drop'\
