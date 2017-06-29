@@ -5,8 +5,7 @@ Ractive.components.droparea = Ractive.extend({
 		on-dragover='dragover'\
 		on-drop='drop'\
 		on-dragleave='dragexit'\
-		>\
-		{{#if dropping}}{{else}}{{ yield }}{{/if}}</div>",
+		>{{ yield }}</div>",
 	onrender: function() {
 		this.on({
 			'dragenter': function(e) { this.set('dropping', true  ) },
