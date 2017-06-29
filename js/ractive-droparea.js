@@ -15,7 +15,7 @@ Ractive.components.droparea = Ractive.extend({
 			'drop': function(e) {
 				this.set('dropping', false )
 				e.original.preventDefault()
-				this.root.fire('file-upload',e) // e.original.dataTransfer.files[0]
+				this.fire('file-upload',e) // e.original.dataTransfer.files[0]
 			},
 		})
 	}
