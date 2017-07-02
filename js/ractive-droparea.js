@@ -12,15 +12,16 @@ Ractive.components.droparea = Ractive.extend({
 		on-drop='drop'\
 		>{{ yield }}</div>",
 	onrender: function() {
+		var $this = this
 		this.on({
 			// Fired when a dragged element or text selection enters a valid drop target.
-			dragenter: function(e) { console.log('dragenter'); this.set('dropping', true  ) },
+			dragenter: function(e) { console.log('dragenter'); $this.set('dropping', true  ) },
 
 			// Fired when a dragged element or text selection leaves a valid drop target.
-			dragleave: function(e) { console.log('dragleave'); this.set('dropping', false ) },
+			dragleave: function(e) { console.log('dragleave'); $this.set('dropping', false ) },
 
 			// Fired when an element or text selection is being dragged over a valid drop target (every few hundred milliseconds).
-			dragover:  function(e) { console.log('dragover');  this.set('dropping', true ); e.original.preventDefault()  },
+			dragover:  function(e) { console.log('dragover');  $this.set('dropping', true ); e.original.preventDefault()  },
 
 			// Fired when the user starts dragging an element or text selection.
 			dragstart: function(e) { console.log('dragstart')  },
@@ -36,9 +37,9 @@ Ractive.components.droparea = Ractive.extend({
 
 			// Fired when an element or text selection is dropped on a valid drop target.
 			drop: function(e) {
-				this.set('dropping', false )
+				$this.set('dropping', false )
 				e.original.preventDefault()
-				this.fire('file-upload',e) // e.original.dataTransfer.files[0]
+				$this.fire('file-upload',e) // e.original.dataTransfer.files[0]
 			},
 		})
 	}
