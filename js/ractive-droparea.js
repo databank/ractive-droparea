@@ -20,7 +20,7 @@ Ractive.components.droparea = Ractive.extend({
 			dragleave: function(e) { console.log('dragleave'); this.set('dropping', false ) },
 
 			// Fired when an element or text selection is being dragged over a valid drop target (every few hundred milliseconds).
-			dragover:  function(e) { console.log('dragover');  e.original.preventDefault()  },
+			dragover:  function(e) { console.log('dragover');  this.set('dropping', true ); e.original.preventDefault()  },
 
 			// Fired when the user starts dragging an element or text selection.
 			dragstart: function(e) { console.log('dragstart')  },
