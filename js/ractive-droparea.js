@@ -2,13 +2,8 @@ Ractive.components.droparea = Ractive.extend({
 	isolated: true,
 	template: "<div class='droparea {{#if dropping}}dropping{{/if}} {{class}} ' style='{{style}}'\
 		on-dragenter='dragenter'\
-		on-dragleave='dragleave'\
+		on-dragleave='customdragleave'\
 		on-dragover='dragover'\
-		on-dragstart='dragstart'\
-		on-drag='drag'\
-		on-dragexit='dragexit'\
-		on-dragleave='dragleave'\
-		on-dragend='dragend'\
 		on-drop='drop'\
 		>{{ yield }}</div>",
 	onrender: function() {
@@ -17,25 +12,43 @@ Ractive.components.droparea = Ractive.extend({
 
 		this.on({
 			// Fired when a dragged element or text selection enters a valid drop target.
-			dragenter: function(e) { console.log('dragenter', e ); $this.set('dropping', true  ) },
+			dragenter: function(e) {
+				//console.log('dragenter' );
+				$this.set('dropping', true  )
+				clearTimeout($this.timeout)
+			},
 
 			// Fired when a dragged element or text selection leaves a valid drop target.
-			dragleave: function(e) { console.log('dragleave', e ); /*$this.set('dropping', false )*/ },
+			customdragleave: function(e) {
+				//console.log('custom-dragleave');
+				$this.timeout = setTimeout(function() {
+					$this.fire('dragleave', e )
+				}, 100 )
+			},
+
+			dragleave: function(e) {
+				//console.log('dragleave');
+				$this.set('dropping', false )
+			},
 
 			// Fired when an element or text selection is being dragged over a valid drop target (every few hundred milliseconds).
-			dragover:  function(e) { console.log('dragover', e );  $this.set('dropping', true ); e.original.preventDefault()  },
+			dragover:  function(e) {
+				//console.log('dragover', e );
+				$this.set('dropping', true );
+				clearTimeout($this.timeout)
+				e.original.preventDefault()
+			},
 
 			// Fired when the user starts dragging an element or text selection.
-			dragstart: function(e) { console.log('dragstart', e )  },
+			//dragstart: function(e) { console.log('dragstart', e )  },
 
 			// Fired when an element or text selection is being dragged.
-			drag: function(e) { console.log('drag', e )  },
+			//drag: function(e) { console.log('drag', e )  },
 
-			// Fired when an element is no longer the drag operation's immediate selection target.
-			dragexit: function(e) { console.log('dragexit', e )  },
+			// dragexit - no ractive plugin
 
 			// Fired when a drag operation is being ended (for example, by releasing a mouse button or hitting the escape key)
-			dragend:  function(e) { console.log('dragend', e )  }, // Fired when a drag operation is being ended (for example, by releasing a mouse button or hitting the escape key)
+			//dragend:  function(e) { console.log('dragend', e )  }, // Fired when a drag operation is being ended (for example, by releasing a mouse button or hitting the escape key)
 
 			// Fired when an element or text selection is dropped on a valid drop target.
 			drop: function(e) {
