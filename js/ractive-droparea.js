@@ -13,12 +13,14 @@ Ractive.components.droparea = Ractive.extend({
 		>{{ yield }}</div>",
 	onrender: function() {
 		var $this = this
+		this.timeout = null;
+
 		this.on({
 			// Fired when a dragged element or text selection enters a valid drop target.
 			dragenter: function(e) { console.log('dragenter', e ); $this.set('dropping', true  ) },
 
 			// Fired when a dragged element or text selection leaves a valid drop target.
-			dragleave: function(e) { console.log('dragleave', e ); $this.set('dropping', false ) },
+			dragleave: function(e) { console.log('dragleave', e ); /*$this.set('dropping', false )*/ },
 
 			// Fired when an element or text selection is being dragged over a valid drop target (every few hundred milliseconds).
 			dragover:  function(e) { console.log('dragover', e );  $this.set('dropping', true ); e.original.preventDefault()  },
